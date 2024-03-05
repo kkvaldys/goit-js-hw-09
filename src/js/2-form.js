@@ -1,7 +1,7 @@
 const form = document.querySelector('.feedback-form');
 const STORAGE_KEY = 'feedback-form-state';
 
-// Заповнення форми даними зі сховища
+// Заповнення форми зі сховища
 function populateForm() {
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (data) {
@@ -12,30 +12,26 @@ function populateForm() {
 
 populateForm();
 
-// Обробка події input
 form.addEventListener('input', e => {
-  // Оновлення локального сховища
-  const data = {
-    email: form.email.value,
-    message: form.message.value,
-  };
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Збереження даних у сховище
+  const email = form.email.value;
+  const message = form.message.value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ email, message }));
 });
 
-// Обробка події submit
 form.addEventListener('submit', e => {
   e.preventDefault();
 
+  // Отримання даних з trim()
+  const email = form.email.value.trim();
+  const message = form.message.value.trim();
+
   // Логування даних при заповнених полях
-  if (form.email.value && form.message.value) {
-    console.log({
-      email: form.email.value,
-      message: form.message.value,
-    });
+  if (email && message) {
+    console.log({ email, message });
   }
 
-  // Очищення форми та сховища
+  // Скидання форми та сховища
   form.reset();
   localStorage.removeItem(STORAGE_KEY);
 });
