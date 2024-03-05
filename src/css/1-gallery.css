@@ -28,3 +28,16 @@
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
+
+.redirect-btn {
+  width: 125px;
+  height: 50px;
+  margin: 0 auto;
+  margin-left: 45vw;
+}
+
+.redirect-btn:hover {
+  transition: transform 0.25s ease-in-out, border-color 0.25s ease-in-out;
+  transform: scale(1.05);
+  border-color: bisque;
+}

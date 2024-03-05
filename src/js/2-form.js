@@ -1,11 +1,11 @@
 const form = document.querySelector('.feedback-form');
 
 function readFormData(form) {
-  const mail = form.email.value;
+  const email = form.email.value;
   const message = form.message.value;
 
   return {
-    mail,
+    email,
     message,
   };
 }
