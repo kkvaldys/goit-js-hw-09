@@ -1,41 +1,41 @@
 const form = document.querySelector('.feedback-form');
-
-// Ключ локального сховища відповідно до завдання
 const STORAGE_KEY = 'feedback-form-state';
 
-// Ініціалізація даних форми з локального сховища
-function populateFormData() {
-  const savedData = localStorage.getItem(STORAGE_KEY);
-  if (savedData) {
-    const { email, message } = JSON.parse(savedData);
-    form.email.value = email;
-    form.message.value = message;
+// Заповнення форми даними зі сховища
+function populateForm() {
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (data) {
+    form.email.value = data.email;
+    form.message.value = data.message;
   }
 }
 
-populateFormData();
+populateForm();
 
-// Зчитування даних форми
-function getFormData() {
-  return {
-    email: form.email.value.trim(),
-    message: form.message.value.trim(),
+// Обробка події input
+form.addEventListener('input', e => {
+  // Оновлення локального сховища
+  const data = {
+    email: form.email.value,
+    message: form.message.value,
   };
-}
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+});
 
 // Обробка події submit
-form.addEventListener('submit', evt => {
-  evt.preventDefault();
+form.addEventListener('submit', e => {
+  e.preventDefault();
 
-  // Валідація та інша логіка
-  const data = getFormData();
+  // Логування даних при заповнених полях
+  if (form.email.value && form.message.value) {
+    console.log({
+      email: form.email.value,
+      message: form.message.value,
+    });
+  }
 
-  // Виведення даних в консоль
-  console.log(data);
-
-  // Скидання форми
+  // Очищення форми та сховища
   form.reset();
-
-  // Збереження даних в локальне сховище
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.removeItem(STORAGE_KEY);
 });
